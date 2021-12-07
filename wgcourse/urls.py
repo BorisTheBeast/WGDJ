@@ -10,6 +10,11 @@ urlpatterns = [
     path('api/password_reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
     path('__debug__/', include(debug_toolbar.urls)),
 ]
+
 urlpatterns += [
     path('api-token-auth/', views.obtain_auth_token)
+]
+
+urlpatterns += [
+     path('catalog/', include('catalog.urls'))
 ]

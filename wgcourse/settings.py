@@ -32,8 +32,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_auth',
     "corsheaders",
+    'catalog',
     'accounts',
-
     'knox',
     'django_rest_passwordreset',
     "debug_toolbar",
@@ -168,6 +168,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # The URL to use when referring to static files (where they will be served from)
 STATIC_URL = '/static/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATIC_URL = '/media/'
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
