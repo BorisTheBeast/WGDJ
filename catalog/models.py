@@ -13,7 +13,7 @@ class Gold(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('book-detail', args=[str(self.id)])
+        return reverse('gold-detail', args=[str(self.id)])
 
 
 class GoldImage(models.Model):
