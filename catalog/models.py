@@ -73,7 +73,7 @@ class Tank(models.Model):
     display = models.BooleanField(default=True)
     priority = models.BooleanField(default=False)
     type = models.ManyToManyField(TankType, help_text="Select a type for this tank")
-    nation = models.ManyToManyField(TankNation, help_text="Select a nation for this tank")
+    nation = models.ForeignKey(TankNation, help_text="Select a nation for this tank", on_delete=models.CASCADE)
     tier = models.IntegerField(default=0)
 
     def __str__(self):
