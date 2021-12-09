@@ -1,5 +1,5 @@
 from django.urls import path
-from catalog.views import GoldViewSet, GoldImageView, PremiumImageView, PremiumViewSet
+from catalog.views import GoldViewSet, GoldImageView, PremiumImageView, PremiumViewSet, TankImageView, TankViewSet
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
@@ -12,4 +12,8 @@ urlpatterns += [
 
 urlpatterns += [
     path('premium/<int:premium_pk>/images/<int:premium_image_pk>/', PremiumImageView.as_view(), name='premium-image')
+]
+
+urlpatterns += [
+    path('tanks/<int:tank_pk>/images/<int:tank_image_pk>/', TankImageView.as_view(), name='tank-image')
 ]

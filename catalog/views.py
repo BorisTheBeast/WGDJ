@@ -1,8 +1,9 @@
 from rest_framework import viewsets
 from rest_framework import generics
 
-from catalog.serializers import GoldSerializer, GoldImageSerializer, PremiumSerializer, PremiumImageSerializer
-from catalog.models import Gold, GoldImage, Premium, PremiumImage
+from catalog.serializers import GoldSerializer, GoldImageSerializer, PremiumSerializer, PremiumImageSerializer, \
+    TankSerializer, TankImageSerializer, TypeSerializer, NationSerializer
+from catalog.models import Gold, GoldImage, Premium, PremiumImage, Tank, TankImage, TankType, TankNation
 
 
 class GoldViewSet(viewsets.ModelViewSet):
@@ -33,3 +34,28 @@ class PremiumImageView(generics.RetrieveUpdateAPIView):
 
     def get_object(self):
         return self.get_queryset().get(pk=self.kwargs['premium_image_pk'])
+
+
+class TankViewSet(viewsets.ModelViewSet):
+    serializer_class = TankSerializer
+    queryset = Tank.objects.all()
+
+
+class TankImageView(generics.RetrieveUpdateAPIView):
+    serializer_class = TankImageSerializer
+
+    def get_queryset(self):
+        return TankImage.objects.filter(tank__pk=self.kwargs['tank_pk'])
+
+    def get_object(self):
+        return self.get_queryset().get(pk=self.kwargs['tank_image_pk'])
+
+
+class TypeViewSet(viewsets.ModelViewSet):
+    serializer_class = TypeSerializer
+    queryset = TankType.objects.all()
+
+
+class NationViewSet(viewsets.ModelViewSet):
+    serializer_class = NationSerializer
+    queryset = TankNation.objects.all()

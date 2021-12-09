@@ -1,7 +1,7 @@
 from django.urls import reverse
 from rest_framework import serializers
 
-from catalog.models import Gold, GoldImage, Premium, PremiumImage
+from catalog.models import Gold, GoldImage, Premium, PremiumImage, TankImage, Tank, TankType, TankNation
 
 
 class GoldImageHyperlinkedField(serializers.HyperlinkedIdentityField):
@@ -26,7 +26,7 @@ class GoldSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Gold
-        fields = ['id', 'title', 'description', 'price', 'discount', 'images']
+        fields = ['id', 'title', 'description', 'price', 'promo', 'discount', 'images', 'display', 'priority']
 
     def create(self, validated_data):
         if 'images' in validated_data:
@@ -65,7 +65,7 @@ class PremiumSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Premium
-        fields = ['id', 'title', 'description', 'price', 'discount', 'images']
+        fields = ['id', 'title', 'description', 'price', 'promo', 'discount', 'images', 'display', 'priority']
 
     def create(self, validated_data):
         if 'images' in validated_data:
@@ -80,3 +80,55 @@ class PremiumSerializer(serializers.ModelSerializer):
             PremiumImage.objects.create(**data)
 
         return obj
+
+
+class TankImageHyperlinkedField(serializers.HyperlinkedIdentityField):
+    def get_url(self, obj, view_name, request, format):
+        url_kwargs = {
+            'tank_pk': obj.tank.pk,
+            'tank_image_pk': obj.pk
+        }
+        return request.build_absolute_uri(reverse(view_name, kwargs=url_kwargs))
+
+
+class TankImageSerializer(serializers.HyperlinkedModelSerializer):
+    edit_url = TankImageHyperlinkedField(view_name='tank-image')
+
+    class Meta:
+        model = TankImage
+        fields = ['id', 'image', 'edit_url']
+
+
+class TankSerializer(serializers.ModelSerializer):
+    images = TankImageSerializer('tank-image', many=True, required=False)
+
+    class Meta:
+        model = Tank
+        fields = ['id', 'title', 'description', 'price', 'promo', 'discount', 'images', 'display', 'type', 'nation',
+                  'priority', 'tier']
+
+    def create(self, validated_data):
+        if 'images' in validated_data:
+            images = validated_data.pop('images')
+        else:
+            images = []
+
+        obj = Tank.objects.create(**validated_data)
+
+        for data in images:
+            data['tank'] = obj
+            TankImage.objects.create(**data)
+
+        return obj
+
+
+class TypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TankType
+        fields = ['name']
+
+
+class NationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TankNation
+        fields = ['name']
