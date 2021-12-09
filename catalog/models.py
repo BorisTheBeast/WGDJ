@@ -22,3 +22,25 @@ class GoldImage(models.Model):
         on_delete=models.CASCADE,
         related_name='images')
     image = models.ImageField(upload_to='gold')
+
+
+class Premium(models.Model):
+
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    price = models.IntegerField(default=0)
+    discount = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse('premium-detail', args=[str(self.id)])
+
+
+class PremiumImage(models.Model):
+    premium = models.ForeignKey(
+        Premium,
+        on_delete=models.CASCADE,
+        related_name='images')
+    image = models.ImageField(upload_to='premium')

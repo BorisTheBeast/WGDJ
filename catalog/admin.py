@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Gold, GoldImage
+from .models import Gold, GoldImage, Premium, PremiumImage
 
 
 class GoldImageInline(admin.TabularInline):
@@ -9,4 +9,12 @@ class GoldImageInline(admin.TabularInline):
 @admin.register(Gold)
 class GoldAdmin(admin.ModelAdmin):
     inlines = [GoldImageInline]
-    
+
+
+class PremiumImageInline(admin.TabularInline):
+    model = PremiumImage
+
+
+@admin.register(Premium)
+class PremiumAdmin(admin.ModelAdmin):
+    inlines = [PremiumImageInline]
