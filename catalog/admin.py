@@ -32,6 +32,7 @@ class TankAdmin(SortableAdminMixin, admin.ModelAdmin):
     list_filter = ['display', 'nation', 'promo', 'priority']
     search_fields = ['title', 'nation__name']
     readonly_fields = ['sort_order']
+    filter_horizontal = ['type']
 
 
 @admin.register(TankType)

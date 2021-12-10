@@ -99,8 +99,21 @@ class TankImageSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['id', 'image', 'edit_url']
 
 
+class FKNameField(serializers.Field):
+    def to_representation(self, value):
+        return value.name
+
+
+class TankTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TankType
+        fields = ['id', 'name']
+
+
 class TankSerializer(serializers.ModelSerializer):
     images = TankImageSerializer('tank-image', many=True, required=False)
+    nation = FKNameField()
+    type = TankTypeSerializer(many=True, read_only=True)
 
     class Meta:
         model = Tank
