@@ -1,4 +1,5 @@
 from django.contrib import admin
+from adminsortable2.admin import SortableAdminMixin
 from .models import Gold, GoldImage, Premium, PremiumImage, Tank, TankImage,TankType, TankNation
 
 
@@ -25,8 +26,12 @@ class TankImageInline(admin.TabularInline):
 
 
 @admin.register(Tank)
-class TankAdmin(admin.ModelAdmin):
+class TankAdmin(SortableAdminMixin, admin.ModelAdmin):
     inlines = [TankImageInline]
+    list_display = ['title', 'id', 'nation', 'tier', 'price', 'promo', 'discount', 'display', 'priority', 'sort_order']
+    list_filter = ['display', 'nation', 'promo', 'priority']
+    search_fields = ['title', 'nation__name']
+    readonly_fields = ['sort_order']
 
 
 @admin.register(TankType)

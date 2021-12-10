@@ -2,6 +2,14 @@ from django.db import models
 from django.urls import reverse
 
 
+class SortableModel(models.Model):
+    sort_order = models.PositiveIntegerField(default=0, blank=False, null=False)
+
+    class Meta:
+        abstract = True
+        ordering = ['sort_order']
+
+
 class Gold(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
@@ -64,7 +72,7 @@ class TankNation(models.Model):
         return self.name
 
 
-class Tank(models.Model):
+class Tank(SortableModel):
     title = models.CharField(max_length=200)
     description = models.TextField()
     price = models.IntegerField(default=0)

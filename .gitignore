@@ -8,6 +8,7 @@ media
 *.sqlite3
 # C extensions
 *.so
+staticfiles
 
 # Distribution / packaging
 .Python
