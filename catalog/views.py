@@ -2,8 +2,10 @@ from rest_framework import viewsets
 from rest_framework import generics
 
 from catalog.serializers import GoldSerializer, GoldImageSerializer, PremiumSerializer, PremiumImageSerializer, \
-    TankSerializer, TankImageSerializer, TypeSerializer, NationSerializer
-from catalog.models import Gold, GoldImage, Premium, PremiumImage, Tank, TankImage, TankType, TankNation
+    TankSerializer, TankImageSerializer, TypeSerializer, NationSerializer, ExchangeCurrencySerializer, \
+    CurrencySerializer
+from catalog.models import Gold, GoldImage, Premium, PremiumImage, Tank, TankImage, TankType, TankNation, \
+    ExchangeCurrency, Currency
 
 
 class GoldViewSet(viewsets.ModelViewSet):
@@ -59,3 +61,13 @@ class TypeViewSet(viewsets.ModelViewSet):
 class NationViewSet(viewsets.ModelViewSet):
     serializer_class = NationSerializer
     queryset = TankNation.objects.all()
+
+
+class ExchangeCurrencyViewSet(viewsets.ModelViewSet):
+    serializer_class = ExchangeCurrencySerializer
+    queryset = ExchangeCurrency.objects.all()
+
+
+class CurrencyViewSet(viewsets.ModelViewSet):
+    serializer_class = CurrencySerializer
+    queryset = Currency.objects.all()

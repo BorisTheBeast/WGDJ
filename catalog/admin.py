@@ -1,6 +1,7 @@
 from django.contrib import admin
 from adminsortable2.admin import SortableAdminMixin
-from .models import Gold, GoldImage, Premium, PremiumImage, Tank, TankImage,TankType, TankNation
+from .models import Gold, GoldImage, Premium, PremiumImage, Tank, TankImage,TankType, TankNation, ExchangeCurrency, \
+    Currency
 
 
 class GoldImageInline(admin.TabularInline):
@@ -43,3 +44,13 @@ class TankTypeAdmin(admin.ModelAdmin):
 @admin.register(TankNation)
 class TankNationAdmin(admin.ModelAdmin):
     model = TankNation
+
+
+@admin.register(ExchangeCurrency)
+class ExchangeCurrencyAdmin(admin.ModelAdmin):
+    model = ExchangeCurrency
+
+
+@admin.register(Currency)
+class CurrencyAdmin(admin.ModelAdmin):
+    model = Currency

@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+import uuid
 
 
 class SortableModel(models.Model):
@@ -11,6 +12,7 @@ class SortableModel(models.Model):
 
 
 class Gold(models.Model):
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     title = models.CharField(max_length=200)
     description = models.TextField()
     price = models.IntegerField(default=0)
@@ -35,6 +37,7 @@ class GoldImage(models.Model):
 
 
 class Premium(models.Model):
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     title = models.CharField(max_length=200)
     description = models.TextField()
     price = models.IntegerField(default=0)
@@ -73,6 +76,7 @@ class TankNation(models.Model):
 
 
 class Tank(SortableModel):
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     title = models.CharField(max_length=200)
     description = models.TextField()
     price = models.IntegerField(default=0)
@@ -97,3 +101,18 @@ class TankImage(models.Model):
         on_delete=models.CASCADE,
         related_name='images')
     image = models.ImageField(upload_to='tanks')
+
+
+class ExchangeCurrency(models.Model):
+    name = models.CharField(max_length=3, help_text="enter exchange currensy", null=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Currency(models.Model):
+    exchange_currensy = models.ForeignKey(ExchangeCurrency, help_text="Select an exchange currency for products",
+                                          on_delete=models.CASCADE)
+    #
+    # def __str__(self):
+    #     return self.exchange_currensy

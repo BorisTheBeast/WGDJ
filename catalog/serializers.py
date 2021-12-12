@@ -1,7 +1,8 @@
 from django.urls import reverse
 from rest_framework import serializers
 
-from catalog.models import Gold, GoldImage, Premium, PremiumImage, TankImage, Tank, TankType, TankNation
+from catalog.models import Gold, GoldImage, Premium, PremiumImage, TankImage, Tank, TankType, TankNation,\
+    ExchangeCurrency, Currency
 
 
 class GoldImageHyperlinkedField(serializers.HyperlinkedIdentityField):
@@ -26,7 +27,7 @@ class GoldSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Gold
-        fields = ['id', 'title', 'description', 'price', 'promo', 'discount', 'images', 'display', 'priority']
+        fields = ['id', 'uuid', 'title', 'description', 'price', 'promo', 'discount', 'images', 'display', 'priority']
 
     def create(self, validated_data):
         if 'images' in validated_data:
@@ -65,7 +66,7 @@ class PremiumSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Premium
-        fields = ['id', 'title', 'description', 'price', 'promo', 'discount', 'images', 'display', 'priority']
+        fields = ['id', 'uuid', 'title', 'description', 'price', 'promo', 'discount', 'images', 'display', 'priority']
 
     def create(self, validated_data):
         if 'images' in validated_data:
@@ -117,7 +118,7 @@ class TankSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Tank
-        fields = ['id', 'title', 'description', 'price', 'promo', 'discount', 'images', 'display', 'type', 'nation',
+        fields = ['id', 'uuid', 'title', 'description', 'price', 'promo', 'discount', 'images', 'display', 'type', 'nation',
                   'priority', 'tier']
 
     def create(self, validated_data):
@@ -145,3 +146,15 @@ class NationSerializer(serializers.ModelSerializer):
     class Meta:
         model = TankNation
         fields = ['name']
+
+
+class ExchangeCurrencySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ExchangeCurrency,
+        fields = ['name']
+
+
+class CurrencySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Currency
+        fields = ['exchange_currensy']
