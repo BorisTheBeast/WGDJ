@@ -155,6 +155,8 @@ class ExchangeCurrencySerializer(serializers.ModelSerializer):
 
 
 class CurrencySerializer(serializers.ModelSerializer):
+    exchange_currensy = FKNameField()
+
     class Meta:
         model = Currency
         fields = ['exchange_currensy']

@@ -113,6 +113,4 @@ class ExchangeCurrency(models.Model):
 class Currency(models.Model):
     exchange_currensy = models.ForeignKey(ExchangeCurrency, help_text="Select an exchange currency for products",
                                           on_delete=models.CASCADE)
-    #
-    # def __str__(self):
-    #     return self.exchange_currensy
+
