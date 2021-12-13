@@ -20,6 +20,7 @@ class Gold(SortableModel):
     discount = models.IntegerField(default=0)
     display = models.BooleanField(default=True)
     priority = models.BooleanField(default=False)
+    main_image = models.ImageField(upload_to='gold/main', default='default.png')
 
     def __str__(self):
         return self.title
@@ -45,6 +46,7 @@ class Premium(SortableModel):
     discount = models.IntegerField(default=0)
     display = models.BooleanField(default=True)
     priority = models.BooleanField(default=False)
+    main_image = models.ImageField(upload_to='premium/main', default='default.png')
 
     def __str__(self):
         return self.title
@@ -87,6 +89,7 @@ class Tank(SortableModel):
     type = models.ManyToManyField(TankType, help_text="Select a type for this tank")
     nation = models.ForeignKey(TankNation, help_text="Select a nation for this tank", on_delete=models.CASCADE)
     tier = models.IntegerField(default=0)
+    main_image = models.ImageField(upload_to='tanks/main', default='default.png')
 
     def __str__(self):
         return self.title

@@ -15,7 +15,7 @@ class GoldSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Gold
-        fields = ['id', 'uuid', 'title', 'description', 'price', 'promo', 'discount', 'images', 'display', 'priority']
+        fields = ['id', 'uuid', 'title', 'description', 'main_image', 'price', 'promo', 'discount', 'images', 'display', 'priority']
 
     def create(self, validated_data):
         if 'images' in validated_data:
@@ -43,7 +43,7 @@ class PremiumSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Premium
-        fields = ['id', 'uuid', 'title', 'description', 'price', 'promo', 'discount', 'images', 'display', 'priority']
+        fields = ['id', 'uuid', 'title', 'description', 'main_image', 'price', 'promo', 'discount', 'images', 'display', 'priority']
 
     def create(self, validated_data):
         if 'images' in validated_data:
@@ -84,7 +84,7 @@ class TankSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Tank
-        fields = ['id', 'uuid', 'title', 'description', 'price', 'promo', 'discount', 'images', 'display', 'type', 'nation',
+        fields = ['id', 'uuid', 'title', 'description', 'main_image', 'price', 'promo', 'discount', 'images', 'display', 'type', 'nation',
                   'priority', 'tier']
 
     def create(self, validated_data):

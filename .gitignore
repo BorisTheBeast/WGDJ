@@ -3,7 +3,6 @@ __pycache__/
 *$py.class
 # Text backup files
 *.bak
-media
 #Database
 *.sqlite3
 # C extensions
