@@ -11,7 +11,7 @@ class GoldViewSet(viewsets.ModelViewSet):
     queryset = Gold.objects.all()
 
 
-class GoldImageView(generics.RetrieveUpdateAPIView):
+class GoldImageView(generics.RetrieveAPIView):
     serializer_class = GoldImageSerializer
 
     def get_queryset(self):
@@ -21,12 +21,12 @@ class GoldImageView(generics.RetrieveUpdateAPIView):
         return self.get_queryset().get(pk=self.kwargs['gold_image_pk'])
 
 
-class PremiumViewSet(viewsets.ModelViewSet):
+class PremiumViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = PremiumSerializer
     queryset = Premium.objects.all()
 
 
-class PremiumImageView(generics.RetrieveUpdateAPIView):
+class PremiumImageView(generics.RetrieveAPIView):
     serializer_class = PremiumImageSerializer
 
     def get_queryset(self):
@@ -36,12 +36,12 @@ class PremiumImageView(generics.RetrieveUpdateAPIView):
         return self.get_queryset().get(pk=self.kwargs['premium_image_pk'])
 
 
-class TankViewSet(viewsets.ModelViewSet):
+class TankViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = TankSerializer
     queryset = Tank.objects.all()
 
 
-class TankImageView(generics.RetrieveUpdateAPIView):
+class TankImageView(generics.RetrieveAPIView):
     serializer_class = TankImageSerializer
 
     def get_queryset(self):
@@ -51,16 +51,16 @@ class TankImageView(generics.RetrieveUpdateAPIView):
         return self.get_queryset().get(pk=self.kwargs['tank_image_pk'])
 
 
-class TypeViewSet(viewsets.ModelViewSet):
+class TypeViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = TypeSerializer
     queryset = TankType.objects.all()
 
 
-class NationViewSet(viewsets.ModelViewSet):
+class NationViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = NationSerializer
     queryset = TankNation.objects.all()
 
 
-class CurrencyViewSet(viewsets.ModelViewSet):
+class CurrencyViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = CurrencySerializer
     queryset = Currency.objects.filter(is_active=True)

@@ -4,21 +4,10 @@ from rest_framework import serializers
 from catalog.models import Gold, GoldImage, Premium, PremiumImage, TankImage, Tank, TankType, TankNation, Currency
 
 
-class GoldImageHyperlinkedField(serializers.HyperlinkedIdentityField):
-    def get_url(self, obj, view_name, request, format):
-        url_kwargs = {
-            'gold_pk': obj.gold.pk,
-            'gold_image_pk': obj.pk
-        }
-        return request.build_absolute_uri(reverse(view_name, kwargs=url_kwargs))
-
-
 class GoldImageSerializer(serializers.HyperlinkedModelSerializer):
-    edit_url = GoldImageHyperlinkedField(view_name='gold-image')
-
     class Meta:
         model = GoldImage
-        fields = ['id', 'image', 'edit_url']
+        fields = ['id', 'image']
 
 
 class GoldSerializer(serializers.ModelSerializer):
@@ -43,21 +32,10 @@ class GoldSerializer(serializers.ModelSerializer):
         return obj
 
 
-class PremiumImageHyperlinkedField(serializers.HyperlinkedIdentityField):
-    def get_url(self, obj, view_name, request, format):
-        url_kwargs = {
-            'premium_pk': obj.premium.pk,
-            'premium_image_pk': obj.pk
-        }
-        return request.build_absolute_uri(reverse(view_name, kwargs=url_kwargs))
-
-
 class PremiumImageSerializer(serializers.HyperlinkedModelSerializer):
-    edit_url = PremiumImageHyperlinkedField(view_name='premium-image')
-
     class Meta:
         model = PremiumImage
-        fields = ['id', 'image', 'edit_url']
+        fields = ['id', 'image']
 
 
 class PremiumSerializer(serializers.ModelSerializer):
@@ -82,21 +60,10 @@ class PremiumSerializer(serializers.ModelSerializer):
         return obj
 
 
-class TankImageHyperlinkedField(serializers.HyperlinkedIdentityField):
-    def get_url(self, obj, view_name, request, format):
-        url_kwargs = {
-            'tank_pk': obj.tank.pk,
-            'tank_image_pk': obj.pk
-        }
-        return request.build_absolute_uri(reverse(view_name, kwargs=url_kwargs))
-
-
 class TankImageSerializer(serializers.HyperlinkedModelSerializer):
-    edit_url = TankImageHyperlinkedField(view_name='tank-image')
-
     class Meta:
         model = TankImage
-        fields = ['id', 'image', 'edit_url']
+        fields = ['id', 'image']
 
 
 class FKNameField(serializers.Field):
