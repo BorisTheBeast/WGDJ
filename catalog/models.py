@@ -103,14 +103,9 @@ class TankImage(models.Model):
     image = models.ImageField(upload_to='tanks')
 
 
-class ExchangeCurrency(models.Model):
+class Currency(models.Model):
     name = models.CharField(max_length=3, help_text="enter exchange currensy", null=True)
+    is_active = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.name
-
-
-class Currency(models.Model):
-    exchange_currensy = models.ForeignKey(ExchangeCurrency, help_text="Select an exchange currency for products",
-                                          on_delete=models.CASCADE)
-
+        return self.name or 'New Currency'

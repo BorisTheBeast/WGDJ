@@ -1,7 +1,7 @@
 from django.contrib import admin
 from adminsortable2.admin import SortableAdminMixin
-from .models import Gold, GoldImage, Premium, PremiumImage, Tank, TankImage,TankType, TankNation, ExchangeCurrency, \
-    Currency
+from .models import Gold, GoldImage, Premium, PremiumImage, Tank, TankImage,TankType, TankNation, Currency
+from django.contrib import messages
 
 
 class GoldImageInline(admin.TabularInline):
@@ -46,11 +46,19 @@ class TankNationAdmin(admin.ModelAdmin):
     model = TankNation
 
 
-@admin.register(ExchangeCurrency)
-class ExchangeCurrencyAdmin(admin.ModelAdmin):
-    model = ExchangeCurrency
+admin.action(description='Mark selected currency active')
+def make_active(modeladmin, request, queryset):
+    if queryset.count() == 1:
+        Currency.objects.filter(is_active=True).update(is_active=False)
+        queryset.update(is_active=True)
+
+        messages.add_message(request, messages.SUCCESS, f'{row.name} set as active currency for store')
+    else:
+        messages.add_message(request, messages.ERROR, 'You should select one currency row to make it active')
 
 
 @admin.register(Currency)
 class CurrencyAdmin(admin.ModelAdmin):
-    model = Currency
+    readonly_fields = ['is_active']
+    list_display = ['name', 'is_active']
+    actions = [make_active]

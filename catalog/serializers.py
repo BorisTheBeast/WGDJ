@@ -1,8 +1,7 @@
 from django.urls import reverse
 from rest_framework import serializers
 
-from catalog.models import Gold, GoldImage, Premium, PremiumImage, TankImage, Tank, TankType, TankNation,\
-    ExchangeCurrency, Currency
+from catalog.models import Gold, GoldImage, Premium, PremiumImage, TankImage, Tank, TankType, TankNation, Currency
 
 
 class GoldImageHyperlinkedField(serializers.HyperlinkedIdentityField):
@@ -148,15 +147,7 @@ class NationSerializer(serializers.ModelSerializer):
         fields = ['name']
 
 
-class ExchangeCurrencySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ExchangeCurrency,
-        fields = ['name']
-
-
 class CurrencySerializer(serializers.ModelSerializer):
-    exchange_currensy = FKNameField()
-
     class Meta:
         model = Currency
-        fields = ['exchange_currensy']
+        fields = ['name', 'is_active']
