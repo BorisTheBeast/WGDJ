@@ -9,8 +9,12 @@ class GoldImageInline(admin.TabularInline):
 
 
 @admin.register(Gold)
-class GoldAdmin(admin.ModelAdmin):
+class GoldAdmin(SortableAdminMixin, admin.ModelAdmin):
     inlines = [GoldImageInline]
+    list_display = ['title', 'id', 'price', 'promo', 'discount', 'display', 'priority', 'sort_order']
+    list_filter = ['display', 'promo', 'priority', 'price']
+    search_fields = ['title']
+    readonly_fields = ['sort_order']
 
 
 class PremiumImageInline(admin.TabularInline):
@@ -18,8 +22,12 @@ class PremiumImageInline(admin.TabularInline):
 
 
 @admin.register(Premium)
-class PremiumAdmin(admin.ModelAdmin):
+class PremiumAdmin(SortableAdminMixin, admin.ModelAdmin):
     inlines = [PremiumImageInline]
+    list_display = ['title', 'id', 'price', 'promo', 'discount', 'display', 'priority', 'sort_order']
+    list_filter = ['display', 'promo', 'priority', 'price']
+    search_fields = ['title']
+    readonly_fields = ['sort_order']
 
 
 class TankImageInline(admin.TabularInline):

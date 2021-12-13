@@ -11,7 +11,7 @@ class SortableModel(models.Model):
         ordering = ['sort_order']
 
 
-class Gold(models.Model):
+class Gold(SortableModel):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     title = models.CharField(max_length=200)
     description = models.TextField()
@@ -36,7 +36,7 @@ class GoldImage(models.Model):
     image = models.ImageField(upload_to='gold')
 
 
-class Premium(models.Model):
+class Premium(SortableModel):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     title = models.CharField(max_length=200)
     description = models.TextField()

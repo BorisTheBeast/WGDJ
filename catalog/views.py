@@ -6,7 +6,7 @@ from catalog.serializers import GoldSerializer, GoldImageSerializer, PremiumSeri
 from catalog.models import Gold, GoldImage, Premium, PremiumImage, Tank, TankImage, TankType, TankNation, Currency
 
 
-class GoldViewSet(viewsets.ModelViewSet):
+class GoldViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = GoldSerializer
     queryset = Gold.objects.all()
 
