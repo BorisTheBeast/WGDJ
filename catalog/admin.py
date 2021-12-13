@@ -51,7 +51,7 @@ def make_active(modeladmin, request, queryset):
     if queryset.count() == 1:
         Currency.objects.filter(is_active=True).update(is_active=False)
         queryset.update(is_active=True)
-
+        row = queryset.first()
         messages.add_message(request, messages.SUCCESS, f'{row.name} set as active currency for store')
     else:
         messages.add_message(request, messages.ERROR, 'You should select one currency row to make it active')
