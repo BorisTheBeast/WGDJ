@@ -65,6 +65,7 @@ class PremiumImage(models.Model):
 
 class TankType(models.Model):
     name = models.CharField(max_length=200, help_text="Enter a tank type", null=True)
+    icon = models.ImageField(upload_to='tanks/type', default='default.png')
 
     def __str__(self):
         return self.name
@@ -72,6 +73,7 @@ class TankType(models.Model):
 
 class TankNation(models.Model):
     name = models.CharField(max_length=200, help_text="Enter a tank nation", null=True)
+    icon = models.ImageField(upload_to='tanks/nation', default='default.png')
 
     def __str__(self):
         return self.name

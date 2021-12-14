@@ -70,3 +70,4 @@ class CurrencyAdmin(admin.ModelAdmin):
     readonly_fields = ['is_active']
     list_display = ['name', 'is_active']
     actions = [make_active]
+    

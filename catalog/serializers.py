@@ -66,20 +66,21 @@ class TankImageSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['id', 'image']
 
 
-class FKNameField(serializers.Field):
-    def to_representation(self, value):
-        return value.name
+class TankNationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TankNation
+        fields = ['id', 'name', 'icon']
 
 
 class TankTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = TankType
-        fields = ['id', 'name']
+        fields = ['id', 'name', 'icon']
 
 
 class TankSerializer(serializers.ModelSerializer):
     images = TankImageSerializer('tank-image', many=True, required=False)
-    nation = FKNameField()
+    nation = TankNationSerializer(read_only=True)
     type = TankTypeSerializer(many=True, read_only=True)
 
     class Meta:
@@ -105,13 +106,13 @@ class TankSerializer(serializers.ModelSerializer):
 class TypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = TankType
-        fields = ['name']
+        fields = ['name', 'icon']
 
 
 class NationSerializer(serializers.ModelSerializer):
     class Meta:
         model = TankNation
-        fields = ['name']
+        fields = ['name', 'icon']
 
 
 class CurrencySerializer(serializers.ModelSerializer):
