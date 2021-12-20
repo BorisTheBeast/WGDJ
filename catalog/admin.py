@@ -1,6 +1,7 @@
 from django.contrib import admin
 from adminsortable2.admin import SortableAdminMixin
-from .models import Gold, GoldImage, Premium, PremiumImage, Tank, TankImage,TankType, TankNation, Currency
+from .models import ProdImage, AllProducts, GoldImage, Premium, PremiumImage, Tank, TankImage, TankType, TankNation, \
+    Currency, Gold, ProdType
 from django.contrib import messages
 
 
@@ -70,4 +71,22 @@ class CurrencyAdmin(admin.ModelAdmin):
     readonly_fields = ['is_active']
     list_display = ['name', 'is_active']
     actions = [make_active]
-    
+
+
+class ProdImageInline(admin.TabularInline):
+    model = ProdImage
+
+
+@admin.register(ProdType)
+class ProdTypeAdmin(admin.ModelAdmin):
+    model = ProdType
+
+
+@admin.register(AllProducts)
+class AllProductsAdmin(SortableAdminMixin, admin.ModelAdmin):
+    inlines = [ProdImageInline]
+    list_display = ['title', 'id', 'nation', 'tier', 'price', 'promo', 'discount', 'display', 'priority', 'sort_order']
+    list_filter = ['display', 'nation', 'promo', 'priority', 'prod_type']
+    search_fields = ['title', 'nation__name']
+    readonly_fields = ['sort_order']
+    filter_horizontal = ['type']

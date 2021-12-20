@@ -114,3 +114,41 @@ class Currency(models.Model):
 
     def __str__(self):
         return self.name or 'New Currency'
+
+
+class ProdType(models.Model):
+    name = models.CharField(max_length=200, help_text="Enter a product type", null=True)
+
+    def __str__(self):
+        return self.name
+
+
+class AllProducts(SortableModel):
+    prod_type = models.ManyToManyField(ProdType, help_text="Select a type of your product")
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    price = models.IntegerField(default=0)
+    promo = models.BooleanField(default=False)
+    discount = models.IntegerField(default=0)
+    display = models.BooleanField(default=True)
+    priority = models.BooleanField(default=False)
+    type = models.ManyToManyField(TankType, help_text="Select a type for this tank", blank=True)
+    nation = models.ForeignKey(TankNation, help_text="Select a nation for this tank", on_delete=models.CASCADE,
+                               blank=True, null=True)
+    tier = models.IntegerField(default=0)
+    main_image = models.ImageField(upload_to='products/main', default='default.png')
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse('all-detail', args=[str(self.id)])
+
+
+class ProdImage(models.Model):
+    all = models.ForeignKey(
+        AllProducts,
+        on_delete=models.CASCADE,
+        related_name='images')
+    image = models.ImageField(upload_to='products')

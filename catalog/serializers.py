@@ -1,7 +1,7 @@
 from django.urls import reverse
 from rest_framework import serializers
 
-from catalog.models import Gold, GoldImage, Premium, PremiumImage, TankImage, Tank, TankType, TankNation, Currency
+from catalog.models import ProdType, ProdImage, AllProducts, Gold, GoldImage, Premium, PremiumImage, TankImage, Tank, TankType, TankNation, Currency
 
 
 class GoldImageSerializer(serializers.HyperlinkedModelSerializer):
@@ -69,13 +69,13 @@ class TankImageSerializer(serializers.HyperlinkedModelSerializer):
 class TankNationSerializer(serializers.ModelSerializer):
     class Meta:
         model = TankNation
-        fields = ['id', 'name', 'icon']
+        fields = ['name', 'icon']
 
 
 class TankTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = TankType
-        fields = ['id', 'name', 'icon']
+        fields = ['name', 'icon']
 
 
 class TankSerializer(serializers.ModelSerializer):
@@ -119,3 +119,41 @@ class CurrencySerializer(serializers.ModelSerializer):
     class Meta:
         model = Currency
         fields = ['name', 'is_active']
+
+
+class ProdTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProdType
+        fields = ['name']
+
+
+class ProdImageSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = ProdImage
+        fields = ['image']
+
+
+class AllProdSerializer(serializers.ModelSerializer):
+    prod_type = ProdTypeSerializer(many=True, read_only=True)
+    images = ProdImageSerializer('prod-image', many=True, required=False)
+    nation = TankNationSerializer(read_only=True)
+    type = TankTypeSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = AllProducts
+        fields = ['prod_type', 'id', 'uuid', 'title', 'description', 'main_image', 'price', 'promo', 'discount',
+                  'images', 'display', 'type', 'nation', 'priority', 'tier']
+
+    def create(self, validated_data):
+        if 'images' in validated_data:
+            images = validated_data.pop('images')
+        else:
+            images = []
+
+        obj = AllProducts.objects.create(**validated_data)
+
+        for data in images:
+            data['all'] = obj
+            ProdImage.objects.create(**data)
+
+        return obj

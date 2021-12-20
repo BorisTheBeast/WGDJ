@@ -1,6 +1,6 @@
 from django.urls import path
 from catalog.views import GoldViewSet, GoldImageView, PremiumImageView, PremiumViewSet, TankImageView, TankViewSet, \
-    TypeViewSet, NationViewSet, CurrencyViewSet
+    TypeViewSet, NationViewSet, CurrencyViewSet, ProdTypeViewSet, AllProdViewSet
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
@@ -10,6 +10,8 @@ router.register(r'tanks', TankViewSet, basename='tanks')
 router.register(r'type', TypeViewSet, basename='type')
 router.register(r'nation', NationViewSet, basename='nation')
 router.register(r'currency', CurrencyViewSet, basename='currency')
+router.register(r'prod-type', ProdTypeViewSet, basename='prod-type')
+router.register(r'products', AllProdViewSet, basename='products')
 urlpatterns = router.urls
 
 urlpatterns += [
