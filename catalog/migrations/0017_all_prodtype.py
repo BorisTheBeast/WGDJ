@@ -6,7 +6,7 @@ import uuid
 
 
 class Migration(migrations.Migration):
-
+    atomic = False
     dependencies = [
         ('catalog', '0016_auto_20211215_0054'),
     ]
