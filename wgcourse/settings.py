@@ -68,6 +68,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
     "http://127.0.0.1:8000",
     "http://127.0.0.1:5501/",
+    "https://competent-euclid-52490f.netlify.app",
 ]
 
 ROOT_URLCONF = 'wgcourse.urls'
