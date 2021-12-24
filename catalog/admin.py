@@ -5,44 +5,44 @@ from .models import ProdImage, AllProducts, GoldImage, Premium, PremiumImage, Ta
 from django.contrib import messages
 
 
-class GoldImageInline(admin.TabularInline):
-    model = GoldImage
+# class GoldImageInline(admin.TabularInline):
+#     model = GoldImage
 
 
-@admin.register(Gold)
-class GoldAdmin(SortableAdminMixin, admin.ModelAdmin):
-    inlines = [GoldImageInline]
-    list_display = ['title', 'id', 'price', 'promo', 'discount', 'display', 'priority', 'sort_order']
-    list_filter = ['display', 'promo', 'priority', 'price']
-    search_fields = ['title']
-    readonly_fields = ['sort_order']
+# @admin.register(Gold)
+# class GoldAdmin(SortableAdminMixin, admin.ModelAdmin):
+#     inlines = [GoldImageInline]
+#     list_display = ['title', 'id', 'price', 'promo', 'discount', 'display', 'priority', 'sort_order']
+#     list_filter = ['display', 'promo', 'priority', 'price']
+#     search_fields = ['title']
+#     readonly_fields = ['sort_order']
 
 
-class PremiumImageInline(admin.TabularInline):
-    model = PremiumImage
+# class PremiumImageInline(admin.TabularInline):
+#     model = PremiumImage
 
 
-@admin.register(Premium)
-class PremiumAdmin(SortableAdminMixin, admin.ModelAdmin):
-    inlines = [PremiumImageInline]
-    list_display = ['title', 'id', 'price', 'promo', 'discount', 'display', 'priority', 'sort_order']
-    list_filter = ['display', 'promo', 'priority', 'price']
-    search_fields = ['title']
-    readonly_fields = ['sort_order']
+# @admin.register(Premium)
+# class PremiumAdmin(SortableAdminMixin, admin.ModelAdmin):
+#     inlines = [PremiumImageInline]
+#     list_display = ['title', 'id', 'price', 'promo', 'discount', 'display', 'priority', 'sort_order']
+#     list_filter = ['display', 'promo', 'priority', 'price']
+#     search_fields = ['title']
+#     readonly_fields = ['sort_order']
 
 
-class TankImageInline(admin.TabularInline):
-    model = TankImage
+# class TankImageInline(admin.TabularInline):
+#     model = TankImage
 
 
-@admin.register(Tank)
-class TankAdmin(SortableAdminMixin, admin.ModelAdmin):
-    inlines = [TankImageInline]
-    list_display = ['title', 'id', 'nation', 'tier', 'price', 'promo', 'discount', 'display', 'priority', 'sort_order']
-    list_filter = ['display', 'nation', 'promo', 'priority']
-    search_fields = ['title', 'nation__name']
-    readonly_fields = ['sort_order']
-    filter_horizontal = ['type']
+# @admin.register(Tank)
+# class TankAdmin(SortableAdminMixin, admin.ModelAdmin):
+#     inlines = [TankImageInline]
+#     list_display = ['title', 'id', 'nation', 'tier', 'price', 'promo', 'discount', 'display', 'priority', 'sort_order']
+#     list_filter = ['display', 'nation', 'promo', 'priority']
+#     search_fields = ['title', 'nation__name']
+#     readonly_fields = ['sort_order']
+#     filter_horizontal = ['type']
 
 
 @admin.register(TankType)
@@ -82,6 +82,20 @@ class ProdTypeAdmin(admin.ModelAdmin):
     model = ProdType
 
 
+admin.action(description='Mark selected items to show')
+def show_items(modeladmin, request, queryset):
+    queryset.update(display=True)
+    row = queryset.first()
+    messages.add_message(request, messages.SUCCESS, f'set as displayed items for store')
+
+
+admin.action(description='Mark selected items to show')
+def hide_items(modeladmin, request, queryset):
+    queryset.update(display=False)
+    row = queryset.first()
+    messages.add_message(request, messages.SUCCESS, f'set as displayed items for store')
+
+
 @admin.register(AllProducts)
 class AllProductsAdmin(SortableAdminMixin, admin.ModelAdmin):
     inlines = [ProdImageInline]
@@ -90,3 +104,4 @@ class AllProductsAdmin(SortableAdminMixin, admin.ModelAdmin):
     search_fields = ['title', 'nation__name']
     readonly_fields = ['sort_order']
     filter_horizontal = ['type']
+    actions = [show_items, hide_items]
