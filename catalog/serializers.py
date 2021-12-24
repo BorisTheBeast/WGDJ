@@ -141,8 +141,8 @@ class AllProdSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = AllProducts
-        fields = ['prod_type', 'id', 'uuid', 'title', 'description', 'main_image', 'price', 'promo', 'discount',
-                  'images', 'display', 'type', 'nation', 'priority', 'tier']
+        fields = ['prod_type', 'id', 'uuid', 'title', 'description', 'main_image', 'price', 'discount',
+                  'images', 'display', 'type', 'nation', 'tier']
 
     def create(self, validated_data):
         if 'images' in validated_data:
