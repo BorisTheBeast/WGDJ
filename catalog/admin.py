@@ -99,8 +99,8 @@ def hide_items(modeladmin, request, queryset):
 @admin.register(AllProducts)
 class AllProductsAdmin(SortableAdminMixin, admin.ModelAdmin):
     inlines = [ProdImageInline]
-    list_display = ['title', 'id', 'nation', 'tier', 'price', 'promo', 'discount', 'display', 'priority', 'sort_order']
-    list_filter = ['display', 'nation', 'promo', 'priority', 'prod_type']
+    list_display = ['title', 'id', 'nation', 'tier', 'price', 'discount', 'display', 'sort_order']
+    list_filter = ['display', 'nation', 'prod_type']
     search_fields = ['title', 'nation__name']
     readonly_fields = ['sort_order']
     filter_horizontal = ['type']

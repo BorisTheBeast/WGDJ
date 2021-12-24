@@ -129,10 +129,8 @@ class AllProducts(SortableModel):
     title = models.CharField(max_length=200)
     description = models.TextField()
     price = models.IntegerField(default=0)
-    promo = models.BooleanField(default=False)
     discount = models.IntegerField(default=0)
     display = models.BooleanField(default=True)
-    priority = models.BooleanField(default=False)
     type = models.ManyToManyField(TankType, help_text="Select a type for this tank", blank=True)
     nation = models.ForeignKey(TankNation, help_text="Select a nation for this tank", on_delete=models.CASCADE,
                                blank=True, null=True)
